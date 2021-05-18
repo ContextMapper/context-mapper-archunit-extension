@@ -1,0 +1,14 @@
+
+BoundedContext SampleContext {
+    Aggregate SampleAggregate1 {
+        Entity SampleAggregate1 {
+            aggregateRoot
+        }
+        Entity SampleEntity1 {
+
+        }
+        ValueObject SampleValueObject1 {
+
+        }
+    }
+}

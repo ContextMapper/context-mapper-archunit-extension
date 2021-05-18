@@ -1,0 +1,6 @@
+
+BoundedContext SampleContext {
+    Module SampleModule1 {
+
+    }
+}

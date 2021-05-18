@@ -16,9 +16,17 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    implementation "com.tngtech.archunit:archunit-junit5:${archUnitVersion}"
+    implementation "org.contextmapper:context-mapper-dsl:${cmlVersion}"
+    implementation "org.jmolecules:jmolecules-ddd:${jmoleculesVersion}"
+    implementation "org.jmolecules:jmolecules-events:${jmoleculesVersion}"
+    implementation "org.junit.jupiter:junit-jupiter-api:${jUnitVersion}"
+
+    testImplementation "org.assertj:assertj-core:${assertJVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${jUnitVersion}"
 }
+
+sourceSets.test.java.srcDirs = ['src/test/java','src/test/cml']
 
 test {
     useJUnitPlatform()
