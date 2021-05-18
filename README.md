@@ -2,4 +2,156 @@
 # Context Mapper ArchUnit Extension 
 [![Build (master)](https://github.com/ContextMapper/context-mapper-archunit-extension/actions/workflows/build_master.yml/badge.svg)](https://github.com/ContextMapper/context-mapper-archunit-extension/actions/workflows/build_master.yml) [![codecov](https://codecov.io/gh/ContextMapper/context-mapper-archunit-extension/branch/master/graph/badge.svg)](https://codecov.io/gh/ContextMapper/context-mapper-archunit-extension) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Maven Central](https://img.shields.io/maven-central/v/org.contextmapper/context-mapper-archunit-extension.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22org.contextmapper%22%20AND%20a:%22context-mapper-archunit-extension%22)
 
-Test your code against the CML model with ArchUnit
+This library can help you validating your code against a Context Mapper DSL (CML) model. It enables Context Mapper users to ensure that the implemented code (tactic DDD) corresponds to the CML model with [ArchUnit](https://www.archunit.org/). To make this work, you need to annotate your Java classes with the tactic DDD concepts. Our library supports [jMolecules](https://github.com/xmolecules/jmolecules) out of the box; but you can use your own set of annotations as well.
+
+**Hint: This is work in progress and in PoC state!** (we are currently evaluating which concrete rules we shall implement first; input very welcome!)
+
+## Usage
+You can use this library to write ArchUnit tests by including it into your Gradle or Maven project.
+
+**Gradle:**
+
+```gradle
+testImplementation 'org.contextmapper:context-mapper-archunit-extension:0.1.0'
+```
+
+**Maven:**
+
+```xml
+<dependency>
+  <groupId>org.contextmapper</groupId>
+  <artifactId>context-mapper-archunit-extension</artifactId>
+  <version>0.1.0</version>
+</dependency>
+```
+
+### Use all our test cases
+The simplest way to apply all our test predefined test cases is to extend our `AbstractTacticArchUnitTest`. An example:
+
+```java
+class TacticArchUnitTestExample extends AbstractTacticArchUnitTest {
+
+    @Override
+    protected String getBoundedContextName() {
+        return "SampleContext";
+    }
+
+    @Override
+    protected String getCMLFilePath() {
+        return "src/test/cml/test.cml";
+    }
+
+    @Override
+    protected String getJavaPackageName2Test() {
+        return "org.contextmapper.archunit.sample.sampleaggregate1";
+    }
+}
+```
+
+You basically have to provide three parameters:
+
+ * The name of the Bounded Context against you want to test (CML).
+ * The path to the CML file.
+ * The package that shall be scanned for the JMolecules annotations.
+
+### Implement custom set of rules
+In case you don't want apply all our rules, you can also implement your custom test cases. An example:
+
+```java
+public class ExampleArchitectureTest {
+
+    private BoundedContext context;
+    private JavaClasses classes;
+
+    @BeforeEach
+    protected void setup() {
+        this.context = new BoundedContextResolver()
+                .resolveBoundedContextFromModel("src/main/cml/model.cml", "SampleBoundedContext");
+        this.classes = new ClassFileImporter()
+                .withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_TESTS)
+                .importPackages("org.example.app");
+    }
+
+    @Test
+    void aggregatesShouldBeModeledInCML() {
+        aggregateClassesShouldBeModeledInCml(context).check(classes);
+    }
+
+    @Test
+    void entitiesShouldBeModeledInCML() {
+        entityClassesShouldBeModeledInCml(context).check(classes);
+    }
+
+    @Test
+    void valueObjectsShouldBeModeledInCML() {
+        valueObjectClassesShouldBeModeledInCml(context).check(classes);
+    }
+}
+```
+
+The three example tests above ensure that Aggregates, Entities, and Value Objects that exist in the Java code, also exist in the CML model. In case a developer adds an Aggregate, Entity, or Value Object to the code that is not part of the CML model, the test will fail.
+
+### Use custom annotations
+By using only our ArchCondition's it is also possible to implement the tests with other annotations than JMolecules:
+
+```java
+public class ExampleArchitectureTest {
+
+    protected BoundedContext context;
+    protected JavaClasses classes;
+
+    
+    @BeforeEach
+    protected void setup() {
+        this.context = new BoundedContextResolver()
+                .resolveBoundedContextFromModel("src/main/cml/model.cml", "SampleBoundedContext");
+        this.classes = new ClassFileImporter()
+                .withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_TESTS)
+                .importPackages("org.example.app");
+    }
+
+    @Test
+    void aggregatesShouldBeModeledInCML() {
+        classes().that().areAnnotatedWith(Aggregate.class).should(beModeledAsAggregatesInCML(context));
+    }
+
+    @Test
+    void entitiesShouldBeModeledInCML() {
+        classes().that().areAnnotatedWith(Entity.class).should(beModeledAsEntitiesInCML(context));
+    }
+
+    @Test
+    void valueObjectsShouldBeModeledInCML() {
+        classes().that().areAnnotatedWith(ValueObject.class).should(beModeledAsValueObjectsInCML(context));
+    }
+}
+```
+
+## Available Rules (just a PoC for now ;)
+| Rule                               | Description                                                                                                                                        |
+|------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `aggregatesShouldBeModeledInCML`   | Aggregates that are implemented in the code (annotated with @AggregateRoot jMolecules annotation) shall exist in the CML Bounded Context as well.  |
+| `entitiesShouldBeModeledInCML`     | Entities that are implemented in the code (annotated with @Entity jMolecules annotation) shall exist in the CML Bounded Context as well.           |
+| `valueObjectsShouldBeModeledInCML` | Value Objects that are implemented in the code (annotated with @ValueObject jMolecules annotation) shall exist in the CML Bounded Context as well. |
+
+## Ideas for rules to implement
+The following list states some rules that could be implemented. We are still working on this list and input it very welcome!
+
+| Rule                                    | Description                                                                                                         |
+|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| `aggregatesShouldAdhereToCmlModel`      | Structural check that ensures that Aggregates consists of same objects (Entities, ValueObjects, etc.); code vs. CML |
+| `entityShouldAdhereToCmlStructure`      | Structural check of entity: same attributes, same methods, same references                                          |
+| `valueObjectShouldAdhereToCmlStructure` | Structure check of value object: same attributes, same methods, same references                                     |
+| `{}ShouldAdhereToCmlStructure`          | dito. for other tactic DDD objects (domain events, service, etc.)                                                   |
+|                                         |                                                                                                                     |
+|                                         |                                                                                                                     |
+|                                         |                                                                                                                     |
+
+## Contributing
+Contribution is always welcome! Here are some ways how you can contribute:
+ * Create Github issues if you find bugs or just want to give suggestions for improvements.
+ * This is an open source project: if you want to code, [create pull requests](https://help.github.com/articles/creating-a-pull-request/) from [forks of this repository](https://help.github.com/articles/fork-a-repo/). Please refer to a Github issue if you contribute this way.
+ * If you want to contribute to our documentation and user guides on our website [https://contextmapper.org/](https://contextmapper.org/), create pull requests from forks of the corresponding page repo [https://github.com/ContextMapper/contextmapper.github.io](https://github.com/ContextMapper/contextmapper.github.io) or create issues [there](https://github.com/ContextMapper/contextmapper.github.io/issues).
+
+## Licence
+ContextMapper is released under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
