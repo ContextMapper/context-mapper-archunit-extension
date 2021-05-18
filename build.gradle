@@ -1,0 +1,112 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'maven-publish'
+    id 'signing'
+    id 'nebula.release' version '13.0.0'
+}
+
+group 'org.contextmapper'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}
+
+check.dependsOn jacocoTestReport
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier = 'sources'
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    archiveClassifier = 'javadoc'
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = "${project.name}"
+            groupId = "${project.group}"
+            version = "${project.version}"
+            from components.java
+            artifact javadocJar
+            artifact sourcesJar
+
+            pom {
+                name = 'Context Mapper ArchUnit Extension'
+                description = 'An extension for ArchUnit to test code against a CML model'
+                url = 'https://github.com/ContextMapper/context-mapper-archunit-extension'
+                organization {
+                    name = 'Context Mapper'
+                    url = 'https://contextmapper.org/'
+                }
+                licenses {
+                    license {
+                        name = 'Apache License 2.0'
+                        url = 'https://github.com/ContextMapper/context-mapper-archunit-extension/blob/master/LICENSE'
+                    }
+                }
+                issueManagement {
+                    system = 'GitHub'
+                    url = 'https://github.com/ContextMapper/context-mapper-archunit-extension/issues'
+                }
+                scm {
+                    url = 'https://github.com/ContextMapper/context-mapper-archunit-extension'
+                    connection = 'scm:git:git://github.com/ContextMapper/context-mapper-archunit-extension.git'
+                    developerConnection = 'scm:git:ssh://git@github.com:ContextMapper/context-mapper-archunit-extension.git'
+                }
+                developers {
+                    developer {
+                        name = 'Stefan Kapferer'
+                        email = 'stefan@contextmapper.org'
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            def releasesRepoUrl = "${ossReleaseStagingRepository}"
+            def snapshotsRepoUrl = "${ossSnapshotRepository}"
+            url = project.version.toString().endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            credentials {
+                username = System.getenv('OSSRH_USERNAME')
+                password = System.getenv('OSSRH_PASSWORD')
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
+}
