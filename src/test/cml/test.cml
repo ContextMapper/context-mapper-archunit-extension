@@ -3,11 +3,21 @@ BoundedContext SampleContext {
     Aggregate SampleAggregate1 {
         Entity SampleAggregate1 {
             aggregateRoot
+
+            Repository Sample1Repository {
+
+            }
         }
         Entity SampleEntity1 {
 
         }
         ValueObject SampleValueObject1 {
+
+        }
+        DomainEvent SampleDomainEvent1 {
+
+        }
+        Service SampleService1 {
 
         }
     }

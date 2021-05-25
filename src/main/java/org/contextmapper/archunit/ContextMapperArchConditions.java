@@ -15,9 +15,7 @@
  */
 package org.contextmapper.archunit;
 
-import org.contextmapper.archunit.conditions.ModeledAsAggregateInContext;
-import org.contextmapper.archunit.conditions.ModeledAsEntityInContext;
-import org.contextmapper.archunit.conditions.ModeledAsValueObjectInContext;
+import org.contextmapper.archunit.conditions.*;
 import org.contextmapper.dsl.contextMappingDSL.BoundedContext;
 
 public class ContextMapperArchConditions {
@@ -32,6 +30,22 @@ public class ContextMapperArchConditions {
 
     public static ModeledAsValueObjectInContext beModeledAsValueObjectInCML(BoundedContext cmlContext) {
         return ModeledAsValueObjectInContext.beModeledAsValueObjectInCML(cmlContext);
+    }
+
+    public static ModeledAsModuleInContext beModeledAsModulesInCML(BoundedContext cmlContext) {
+        return ModeledAsModuleInContext.beModeledAsModulesInCML(cmlContext);
+    }
+
+    public static ModeledAsDomainEventInContext beModeledAsDomainEventInCML(BoundedContext cmlContext) {
+        return ModeledAsDomainEventInContext.beModeledAsDomainEventInCML(cmlContext);
+    }
+
+    public static ModeledAsServiceInContext beModeledAsServiceInCML(BoundedContext cmlContext) {
+        return ModeledAsServiceInContext.beModeledAsServiceInCML(cmlContext);
+    }
+
+    public static ModeledAsRepositoryInContext beModeledAsRepositoryInCML(BoundedContext boundedContext) {
+        return ModeledAsRepositoryInContext.beModeledAsRepositoryInCML(boundedContext);
     }
 
 }

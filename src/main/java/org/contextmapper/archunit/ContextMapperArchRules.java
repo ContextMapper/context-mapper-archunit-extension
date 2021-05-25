@@ -34,6 +34,16 @@ public class ContextMapperArchRules {
     }
 
     /**
+     * Ensures that modules in the code (package-info.java classes annotated with @Module) are modeled as modules in CML.
+     *
+     * @param boundedContext the Bounded Context within which the Aggregate should be modelled
+     * @return returns an ArchRule object
+     */
+    public static ArchRule modulePackagesShouldBeModeledInCml(final BoundedContext boundedContext) {
+        return moduleClasses.should(beModeledAsModulesInCML(boundedContext));
+    }
+
+    /**
      * Ensures that entities in the code (classes annotated with @Entity) are modeled as entities in CML.
      *
      * @param boundedContext the Bounded Context within which the Aggregate should be modelled
@@ -51,6 +61,36 @@ public class ContextMapperArchRules {
      */
     public static ArchRule valueObjectClassesShouldBeModeledInCml(final BoundedContext boundedContext) {
         return valueObjectClasses.should(beModeledAsValueObjectInCML(boundedContext));
+    }
+
+    /**
+     * Ensures that value objects in the code (classes annotated with @DomainEvent) are modeled as domain events in CML.
+     *
+     * @param boundedContext the Bounded Context within which the Aggregate should be modelled
+     * @return returns an ArchRule object
+     */
+    public static ArchRule domainEventClassesShouldBeModeledInCml(final BoundedContext boundedContext) {
+        return domainEventClasses.should(beModeledAsDomainEventInCML(boundedContext));
+    }
+
+    /**
+     * Ensures that services in the code (classes annotated with @Service) are modeled as service in CML.
+     *
+     * @param boundedContext the Bounded Context within which the Aggregate should be modelled
+     * @return returns an ArchRule object
+     */
+    public static ArchRule serviceClassesShouldBeModeledInCml(final BoundedContext boundedContext) {
+        return serviceClasses.should(beModeledAsServiceInCML(boundedContext));
+    }
+
+    /**
+     * Ensures that repositories in the code (classes annotated with @Repository) are modeled as repositories in CML.
+     *
+     * @param boundedContext the Bounded Context within which the Aggregate should be modelled
+     * @return returns an ArchRule object
+     */
+    public static ArchRule repositoryClassesShouldBeModeledInCml(final BoundedContext boundedContext) {
+        return repositoryClasses.should(beModeledAsRepositoryInCML(boundedContext));
     }
 
 }
