@@ -128,11 +128,17 @@ public class ExampleArchitectureTest {
 ```
 
 ## Available Rules (just a PoC for now ;)
-| Rule                               | Description                                                                                                                                        |
-|------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `aggregatesShouldBeModeledInCML`   | Aggregates that are implemented in the code (annotated with @AggregateRoot jMolecules annotation) shall exist in the CML Bounded Context as well.  |
-| `entitiesShouldBeModeledInCML`     | Entities that are implemented in the code (annotated with @Entity jMolecules annotation) shall exist in the CML Bounded Context as well.           |
-| `valueObjectsShouldBeModeledInCML` | Value Objects that are implemented in the code (annotated with @ValueObject jMolecules annotation) shall exist in the CML Bounded Context as well. |
+| Rule                               | Description                                                                                                                                                     |
+|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `aggregatesShouldBeModeledInCML`   | Aggregates that are implemented in the code (for example annotated with @AggregateRoot jMolecules annotation) shall exist in the CML Bounded Context as well.   |
+| `modulesShouldBeModeledInCML`      | Modules that are implemented in the code (for example annotated with @Module jMolecules annotation) shall exist in the CML Bounded Context as well.             |
+| `entitiesShouldBeModeledInCML`     | Entities that are implemented in the code (for example annotated with @Entity jMolecules annotation) shall exist in the CML Bounded Context as well.            |
+| `valueObjectsShouldBeModeledInCML` | Value Objects that are implemented in the code (for example annotated with @ValueObject jMolecules annotation) shall exist in the CML Bounded Context as well.  |
+| `domainEventsShouldBeModeledInCML` | Domain events that are implemented in the code (for example annotated with @DomainEvent jMolecules annotation) shall exist int the CML Bounded Context as well. |
+| `servicesShouldBeModeledInCML`     | Services that are implemented in the code (for example annotated with @Service jMolecules annotation) shall exist in the CML Bounded Context as well.           |
+| `repositoriesShouldBeModeledInCML` | Repositories that are implemented in the code (for example annotated with @Repository annotation) shall exist in the CML Bounded Context as well.               |
+|                                    |                                                                                                                                                                 |
+|                                    |                                                                                                                                                                 |
 
 ## Ideas for rules to implement
 The following list states some rules that could be implemented. We are still working on this list and input it very welcome!
