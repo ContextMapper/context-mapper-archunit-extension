@@ -38,6 +38,4 @@ public class JMoleculesClassConjunctions {
 
     public static final GivenClassesConjunction repositoryClasses = classes().that().areAnnotatedWith(Repository.class);
 
-    public static final GivenClassesConjunction factoryClasses = classes().that().areAnnotatedWith(Factory.class);
-
 }
