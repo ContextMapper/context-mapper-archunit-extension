@@ -70,6 +70,11 @@ public abstract class AbstractTacticArchUnitTest {
     }
 
     @Test
+    void modulesShouldBeModeledInCML() {
+        modulePackagesShouldBeModeledInCml(context).check(classes);
+    }
+
+    @Test
     void entitiesShouldBeModeledInCML() {
         entityClassesShouldBeModeledInCml(context).check(classes);
     }
@@ -77,5 +82,20 @@ public abstract class AbstractTacticArchUnitTest {
     @Test
     void valueObjectsShouldBeModeledInCML() {
         valueObjectClassesShouldBeModeledInCml(context).check(classes);
+    }
+
+    @Test
+    void domainEventsShouldBeModeledInCML() {
+        domainEventClassesShouldBeModeledInCml(context).check(classes);
+    }
+
+    @Test
+    void servicesShouldBeModeledInCML() {
+        serviceClassesShouldBeModeledInCml(context).check(classes);
+    }
+
+    @Test
+    void repositoriesShouldBeModeledInCML() {
+        repositoryClassesShouldBeModeledInCml(context).check(classes);
     }
 }
