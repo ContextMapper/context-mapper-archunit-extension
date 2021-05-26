@@ -4,8 +4,6 @@
 
 This library can help you validating your code against a Context Mapper DSL (CML) model. It enables Context Mapper users to ensure that the implemented code (tactic DDD) corresponds to the CML model with [ArchUnit](https://www.archunit.org/). To make this work, you need to annotate your Java classes with the tactic DDD concepts. Our library supports [jMolecules](https://github.com/xmolecules/jmolecules) out of the box; but you can use your own set of annotations as well.
 
-**Hint: This is work in progress and in PoC state!** (we are currently evaluating which concrete rules we shall implement first; input very welcome!)
-
 ## Usage
 You can use this library to write ArchUnit tests by including it into your Gradle or Maven project.
 
@@ -127,30 +125,25 @@ public class ExampleArchitectureTest {
 }
 ```
 
-## Available Rules (just a PoC for now ;)
-|                                                 | Description                                                                                                                                                                                                                                                                     |
-|-------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `aggregatesShouldBeModeledInCML`                | Aggregates that are implemented in the code (for example annotated with @AggregateRoot jMolecules annotation) shall exist in the CML Bounded Context as well.                                                                                                                   |
-| `modulesShouldBeModeledInCML`                   | Modules that are implemented in the code (for example annotated with @Module jMolecules annotation) shall exist in the CML Bounded Context as well.                                                                                                                             |
-| `entitiesShouldBeModeledInCML`                  | Entities that are implemented in the code (for example annotated with @Entity jMolecules annotation) shall exist in the CML Bounded Context as well.                                                                                                                            |
-| `valueObjectsShouldBeModeledInCML`              | Value Objects that are implemented in the code (for example annotated with @ValueObject jMolecules annotation) shall exist in the CML Bounded Context as well.                                                                                                                  |
-| `domainEventsShouldBeModeledInCML`              | Domain events that are implemented in the code (for example annotated with @DomainEvent jMolecules annotation) shall exist int the CML Bounded Context as well.                                                                                                                 |
-| `servicesShouldBeModeledInCML`                  | Services that are implemented in the code (for example annotated with @Service jMolecules annotation) shall exist in the CML Bounded Context as well.                                                                                                                           |
-| `repositoriesShouldBeModeledInCML`              | Repositories that are implemented in the code (for example annotated with @Repository annotation) shall exist in the CML Bounded Context as well.                                                                                                                               |
-| `aggregatesShouldAdhereToCmlAggregateStructure` | This rule ensures that an Aggregate in the code (basically a Java package with a marker on the aggregate root entity; for example annotated with @AggregateRoot jMolecules annotation) consists of the same entities, value objects, and domain events as it is modeled in CML. |
-|                                                 |                                                                                                                                                                                                                                                                                 |
+## Available Rules and Conditions
+_Hint:_ The available rules are implemented with the jMolecules DDD annotations. However, you can implement the same rules with your
+own set of annotations or interfaces by using the corresponding ArchUnit conditions.
 
-## Ideas for rules to implement
-The following list states some rules that could be implemented. We are still working on this list and input it very welcome!
+|                                                     | Description                                                                                                                                                                                                                                                                     |
+|-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `aggregatesShouldBeModeledInCML`                    | Aggregates that are implemented in the code (for example annotated with @AggregateRoot jMolecules annotation) shall exist in the CML Bounded Context as well.                                                                                                                   |
+| `modulesShouldBeModeledInCML`                       | Modules that are implemented in the code (for example annotated with @Module jMolecules annotation) shall exist in the CML Bounded Context as well.                                                                                                                             |
+| `entitiesShouldBeModeledInCML`                      | Entities that are implemented in the code (for example annotated with @Entity jMolecules annotation) shall exist in the CML Bounded Context as well.                                                                                                                            |
+| `valueObjectsShouldBeModeledInCML`                  | Value Objects that are implemented in the code (for example annotated with @ValueObject jMolecules annotation) shall exist in the CML Bounded Context as well.                                                                                                                  |
+| `domainEventsShouldBeModeledInCML`                  | Domain events that are implemented in the code (for example annotated with @DomainEvent jMolecules annotation) shall exist int the CML Bounded Context as well.                                                                                                                 |
+| `servicesShouldBeModeledInCML`                      | Services that are implemented in the code (for example annotated with @Service jMolecules annotation) shall exist in the CML Bounded Context as well.                                                                                                                           |
+| `repositoriesShouldBeModeledInCML`                  | Repositories that are implemented in the code (for example annotated with @Repository annotation) shall exist in the CML Bounded Context as well.                                                                                                                               |
+| `aggregatesShouldAdhereToCmlAggregateStructure`     | This rule ensures that an Aggregate in the code (basically a Java package with a marker on the aggregate root entity; for example annotated with @AggregateRoot jMolecules annotation) consists of the same entities, value objects, and domain events as it is modeled in CML. |
+| `entitiesShouldAdhereToCmlEntityStructure`          | This rule ensures that the fields of an entity in the code (for example annotated with @Entity jMolecules annotation) are also modeled in the corresponding CML entity.                                                                                                         |
+| `valueObjectsShouldAdhereToCmlValueObjectStructure` | This rule ensures that the fields of a value object in the code (for example annotated with @ValueObject jMolecules annotation) are also modeled in the corresponding CML value object.                                                                                         |
+| `domainEventsShouldAdhereToCmlDomainEventStructure` | This rule ensures that the fields of a domain event in the code (for example annotated with @DomainEvent jMolecules annotation) are also modeled in the corresponding CML domain event.                                                                                         |
 
-| Rule                                    | Description                                                                                                         |
-|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------|
-| `entityShouldAdhereToCmlStructure`      | Structural check of entity: same attributes, same methods, same references                                          |
-| `valueObjectShouldAdhereToCmlStructure` | Structure check of value object: same attributes, same methods, same references                                     |
-| `{}ShouldAdhereToCmlStructure`          | dito. for other tactic DDD objects (domain events, service, etc.)                                                   |
-|                                         |                                                                                                                     |
-|                                         |                                                                                                                     |
-|                                         |                                                                                                                     |
+**Missing some rules/conditions?** Contributions are always welcome! Create PRs or GitHub issues with your ideas/requirements.
 
 ## Contributing
 Contribution is always welcome! Here are some ways how you can contribute:
