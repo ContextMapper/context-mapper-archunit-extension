@@ -10,7 +10,7 @@ You can use this library to write ArchUnit tests by including it into your Gradl
 **Gradle:**
 
 ```gradle
-testImplementation 'org.contextmapper:context-mapper-archunit-extension:0.1.0'
+testImplementation 'org.contextmapper:context-mapper-archunit-extension:1.0.0'
 ```
 
 **Maven:**
@@ -19,7 +19,7 @@ testImplementation 'org.contextmapper:context-mapper-archunit-extension:0.1.0'
 <dependency>
   <groupId>org.contextmapper</groupId>
   <artifactId>context-mapper-archunit-extension</artifactId>
-  <version>0.1.0</version>
+  <version>1.0.0</version>
 </dependency>
 ```
 
