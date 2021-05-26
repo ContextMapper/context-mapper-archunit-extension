@@ -26,6 +26,9 @@ import static org.contextmapper.archunit.transformers.JMoleculesAggregatePackage
 
 public class ContextMapperJMoleculesArchRules {
 
+    private ContextMapperJMoleculesArchRules() {
+    }
+
     /**
      * Ensures that Aggregates in the code (classes annotated with @AggregateRoot) are modeled as Aggregates in CML.
      *

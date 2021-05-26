@@ -21,6 +21,9 @@ import org.contextmapper.dsl.contextMappingDSL.BoundedContext;
 
 public class ContextMapperArchConditions {
 
+    private ContextMapperArchConditions() {
+    }
+
     /**
      * Checks whether a class, given by its simple name, is represented as an Aggregate in CML.
      *
