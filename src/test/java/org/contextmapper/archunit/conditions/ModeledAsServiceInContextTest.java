@@ -23,7 +23,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.contextmapper.archunit.ContextMapperArchRules.serviceClassesShouldBeModeledInCml;
+import static org.contextmapper.archunit.ContextMapperJMoleculesArchRules.serviceClassesShouldBeModeledInCml;
 
 class ModeledAsServiceInContextTest {
 

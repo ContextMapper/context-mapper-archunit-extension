@@ -16,12 +16,15 @@
 package org.contextmapper.archunit;
 
 import com.tngtech.archunit.lang.ArchRule;
+import org.contextmapper.archunit.annotations.JMoleculesTacticAnnotationSet;
 import org.contextmapper.dsl.contextMappingDSL.BoundedContext;
 
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.all;
 import static org.contextmapper.archunit.ContextMapperArchConditions.*;
 import static org.contextmapper.archunit.conjunctions.JMoleculesClassConjunctions.*;
+import static org.contextmapper.archunit.transformers.JMoleculesAggregatePackageTransformer.aggregatePackages;
 
-public class ContextMapperArchRules {
+public class ContextMapperJMoleculesArchRules {
 
     /**
      * Ensures that Aggregates in the code (classes annotated with @AggregateRoot) are modeled as Aggregates in CML.
@@ -74,7 +77,7 @@ public class ContextMapperArchRules {
     }
 
     /**
-     * Ensures that services in the code (classes annotated with @Service) are modeled as service in CML.
+     * Ensures that services in the code (classes annotated with @Service) are modeled as services in CML.
      *
      * @param boundedContext the Bounded Context within which the Aggregate should be modelled
      * @return returns an ArchRule object
@@ -91,6 +94,17 @@ public class ContextMapperArchRules {
      */
     public static ArchRule repositoryClassesShouldBeModeledInCml(final BoundedContext boundedContext) {
         return repositoryClasses.should(beModeledAsRepositoryInCML(boundedContext));
+    }
+
+    /**
+     * Ensures that the classes (entities, value objects, and domain events) inside an Aggregates package are also
+     * contained in the corresponding Aggregate of the CML model.
+     *
+     * @param boundedContext the Bounded Context within which the Aggregate should be modelled
+     * @return returns an ArchRule object
+     */
+    public static ArchRule aggregatesShouldAdhereToCmlStructure(final BoundedContext boundedContext) {
+        return all(aggregatePackages).should(adhereToCmlAggregateStructure(boundedContext, JMoleculesTacticAnnotationSet.instance()));
     }
 
 }
