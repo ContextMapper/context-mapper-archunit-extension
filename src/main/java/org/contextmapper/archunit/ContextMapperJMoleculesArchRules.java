@@ -26,6 +26,9 @@ import static org.contextmapper.archunit.transformers.JMoleculesAggregatePackage
 
 public class ContextMapperJMoleculesArchRules {
 
+    private ContextMapperJMoleculesArchRules() {
+    }
+
     /**
      * Ensures that Aggregates in the code (classes annotated with @AggregateRoot) are modeled as Aggregates in CML.
      *
@@ -39,7 +42,7 @@ public class ContextMapperJMoleculesArchRules {
     /**
      * Ensures that modules in the code (package-info.java classes annotated with @Module) are modeled as modules in CML.
      *
-     * @param boundedContext the Bounded Context within which the Aggregate should be modelled
+     * @param boundedContext the Bounded Context within which the Module should be modelled
      * @return returns an ArchRule object
      */
     public static ArchRule modulePackagesShouldBeModeledInCml(final BoundedContext boundedContext) {
@@ -49,7 +52,7 @@ public class ContextMapperJMoleculesArchRules {
     /**
      * Ensures that entities in the code (classes annotated with @Entity) are modeled as entities in CML.
      *
-     * @param boundedContext the Bounded Context within which the Aggregate should be modelled
+     * @param boundedContext the Bounded Context within which the Entity should be modelled
      * @return returns an ArchRule object
      */
     public static ArchRule entityClassesShouldBeModeledInCml(final BoundedContext boundedContext) {
@@ -59,7 +62,7 @@ public class ContextMapperJMoleculesArchRules {
     /**
      * Ensures that value objects in the code (classes annotated with @ValueObject) are modeled as value objects in CML.
      *
-     * @param boundedContext the Bounded Context within which the Aggregate should be modelled
+     * @param boundedContext the Bounded Context within which the Value Object should be modelled
      * @return returns an ArchRule object
      */
     public static ArchRule valueObjectClassesShouldBeModeledInCml(final BoundedContext boundedContext) {
@@ -67,9 +70,9 @@ public class ContextMapperJMoleculesArchRules {
     }
 
     /**
-     * Ensures that value objects in the code (classes annotated with @DomainEvent) are modeled as domain events in CML.
+     * Ensures that domain events in the code (classes annotated with @DomainEvent) are modeled as domain events in CML.
      *
-     * @param boundedContext the Bounded Context within which the Aggregate should be modelled
+     * @param boundedContext the Bounded Context within which the domain event should be modelled
      * @return returns an ArchRule object
      */
     public static ArchRule domainEventClassesShouldBeModeledInCml(final BoundedContext boundedContext) {
@@ -79,7 +82,7 @@ public class ContextMapperJMoleculesArchRules {
     /**
      * Ensures that services in the code (classes annotated with @Service) are modeled as services in CML.
      *
-     * @param boundedContext the Bounded Context within which the Aggregate should be modelled
+     * @param boundedContext the Bounded Context within which the service should be modelled
      * @return returns an ArchRule object
      */
     public static ArchRule serviceClassesShouldBeModeledInCml(final BoundedContext boundedContext) {
@@ -89,7 +92,7 @@ public class ContextMapperJMoleculesArchRules {
     /**
      * Ensures that repositories in the code (classes annotated with @Repository) are modeled as repositories in CML.
      *
-     * @param boundedContext the Bounded Context within which the Aggregate should be modelled
+     * @param boundedContext the Bounded Context within which the repository should be modelled
      * @return returns an ArchRule object
      */
     public static ArchRule repositoryClassesShouldBeModeledInCml(final BoundedContext boundedContext) {
@@ -105,6 +108,39 @@ public class ContextMapperJMoleculesArchRules {
      */
     public static ArchRule aggregatesShouldAdhereToCmlStructure(final BoundedContext boundedContext) {
         return all(aggregatePackages).should(adhereToCmlAggregateStructure(boundedContext, JMoleculesTacticAnnotationSet.instance()));
+    }
+
+    /**
+     * Ensures that entities in the code (classes annotated with @Entity) only contain fields that are modeled in the
+     * corresponding CML entities as well.
+     *
+     * @param boundedContext the Bounded Context within which entities shall be checked
+     * @return returns an ArchRule object
+     */
+    public static ArchRule entitiesShouldAdhereToCmlEntityStructure(final BoundedContext boundedContext) {
+        return entityClasses.should(adhereToCmlEntityStructure(boundedContext));
+    }
+
+    /**
+     * Ensures that value objects in the code (classes annotated with @ValueObject) only contain fields that are modeled
+     * in the corresponding CML value objects as well.
+     *
+     * @param boundedContext the Bounded Context within which value objects shall be checked
+     * @return returns an ArchRule object
+     */
+    public static ArchRule valueObjectsShouldAdhereToCmlValueObjectStructure(final BoundedContext boundedContext) {
+        return valueObjectClasses.should(adhereToCmlValueObjectStructure(boundedContext));
+    }
+
+    /**
+     * Ensures that domain events in the code (classes annotated with @DomainEvent) only contain fields that are modeled
+     * in the corresponding CML domain events as well.
+     *
+     * @param boundedContext the Bounded Context within which domain events shall be checked
+     * @return return an ArchRule object
+     */
+    public static ArchRule domainEventsShouldAdhereToCmlDomainEventStructure(final BoundedContext boundedContext) {
+        return domainEventClasses.should(adhereToCmlDomainEventStructure(boundedContext));
     }
 
 }

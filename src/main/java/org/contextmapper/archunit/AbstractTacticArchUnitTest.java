@@ -105,4 +105,20 @@ public abstract class AbstractTacticArchUnitTest {
     void repositoriesShouldBeModeledInCML() {
         repositoryClassesShouldBeModeledInCml(context).check(classes);
     }
+
+    @Test
+    void entitiesShouldAdhereToCmlStructure() {
+        entitiesShouldAdhereToCmlEntityStructure(context).check(classes);
+    }
+
+    @Test
+    void valueObjectsShouldAdhereToCmlStructure() {
+        valueObjectsShouldAdhereToCmlValueObjectStructure(context).check(classes);
+    }
+
+    @Test
+    void domainEventsShouldAdhereToCmlStructure() {
+        domainEventsShouldAdhereToCmlDomainEventStructure(context).check(classes);
+    }
+
 }
