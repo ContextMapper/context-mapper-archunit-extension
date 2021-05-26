@@ -4,6 +4,8 @@ BoundedContext SampleContext {
         Entity SampleAggregate1 {
             aggregateRoot
 
+            String sampleField;
+
             Repository Sample1Repository {
 
             }
@@ -12,13 +14,29 @@ BoundedContext SampleContext {
 
         }
         ValueObject SampleValueObject1 {
-
+            String sampleField;
         }
         DomainEvent SampleDomainEvent1 {
-
+            String sampleField;
         }
         Service SampleService1 {
 
+        }
+    }
+    Aggregate SampleAggregate2 {
+        Entity SampleAggregate2 {
+            aggregateRoot
+
+            - SampleValueObject2 sampleField;
+        }
+        ValueObject SampleValueObject2 {
+            - ReferenceHelperObject1 sampleField;
+        }
+        ValueObject ReferenceHelperObject1 {
+
+        }
+        DomainEvent SampleDomainEvent2 {
+            - ReferenceHelperObject1 sampleField;
         }
     }
 }

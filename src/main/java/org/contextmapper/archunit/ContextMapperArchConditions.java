@@ -54,4 +54,16 @@ public class ContextMapperArchConditions {
         return AdhereToCmlAggregateStructure.adhereToCmlAggregateStructure(boundedContext, tacticDDDAnnotationSet);
     }
 
+    public static AdhereToCmlEntityStructure adhereToCmlEntityStructure(BoundedContext boundedContext) {
+        return AdhereToCmlEntityStructure.adhereToCmlEntityStructure(boundedContext);
+    }
+
+    public static AdhereToCmlValueObjectStructure adhereToCmlValueObjectStructure(BoundedContext boundedContext) {
+        return AdhereToCmlValueObjectStructure.adhereToCmlValueObjectStructure(boundedContext);
+    }
+
+    public static AdhereToCmlDomainEventStructure adhereToCmlDomainEventStructure(BoundedContext boundedContext) {
+        return AdhereToCmlDomainEventStructure.adhereToCmlDomainEventStructure(boundedContext);
+    }
+
 }
