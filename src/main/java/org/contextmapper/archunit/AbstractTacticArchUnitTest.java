@@ -23,10 +23,12 @@ import org.contextmapper.dsl.contextMappingDSL.BoundedContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.contextmapper.archunit.ContextMapperArchRules.*;
+import static org.contextmapper.archunit.ContextMapperJMoleculesArchRules.*;
 
 /**
  * An abstract test class that can be extended in order to execute all our ArchRules for a single Bounded Context.
+ * This test is based on the jMolecules annotations. In case you work with other annotations, you have to implement
+ * your test manually.
  */
 public abstract class AbstractTacticArchUnitTest {
 
@@ -70,6 +72,16 @@ public abstract class AbstractTacticArchUnitTest {
     }
 
     @Test
+    void aggregatesShouldAdhereToCmlAggregateStructure() {
+        aggregatesShouldAdhereToCmlStructure(context).check(classes);
+    }
+
+    @Test
+    void modulesShouldBeModeledInCML() {
+        modulePackagesShouldBeModeledInCml(context).check(classes);
+    }
+
+    @Test
     void entitiesShouldBeModeledInCML() {
         entityClassesShouldBeModeledInCml(context).check(classes);
     }
@@ -77,5 +89,20 @@ public abstract class AbstractTacticArchUnitTest {
     @Test
     void valueObjectsShouldBeModeledInCML() {
         valueObjectClassesShouldBeModeledInCml(context).check(classes);
+    }
+
+    @Test
+    void domainEventsShouldBeModeledInCML() {
+        domainEventClassesShouldBeModeledInCml(context).check(classes);
+    }
+
+    @Test
+    void servicesShouldBeModeledInCML() {
+        serviceClassesShouldBeModeledInCml(context).check(classes);
+    }
+
+    @Test
+    void repositoriesShouldBeModeledInCML() {
+        repositoryClassesShouldBeModeledInCml(context).check(classes);
     }
 }

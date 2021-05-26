@@ -15,6 +15,7 @@
  */
 package org.contextmapper.archunit;
 
+import org.contextmapper.archunit.annotations.TacticDDDAnnotationSet;
 import org.contextmapper.archunit.conditions.*;
 import org.contextmapper.dsl.contextMappingDSL.BoundedContext;
 
@@ -46,6 +47,11 @@ public class ContextMapperArchConditions {
 
     public static ModeledAsRepositoryInContext beModeledAsRepositoryInCML(BoundedContext boundedContext) {
         return ModeledAsRepositoryInContext.beModeledAsRepositoryInCML(boundedContext);
+    }
+
+    public static AdhereToCmlAggregateStructure adhereToCmlAggregateStructure(BoundedContext boundedContext,
+                                                                              TacticDDDAnnotationSet tacticDDDAnnotationSet) {
+        return AdhereToCmlAggregateStructure.adhereToCmlAggregateStructure(boundedContext, tacticDDDAnnotationSet);
     }
 
 }

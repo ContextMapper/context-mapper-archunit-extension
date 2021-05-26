@@ -128,24 +128,23 @@ public class ExampleArchitectureTest {
 ```
 
 ## Available Rules (just a PoC for now ;)
-| Rule                               | Description                                                                                                                                                     |
-|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `aggregatesShouldBeModeledInCML`   | Aggregates that are implemented in the code (for example annotated with @AggregateRoot jMolecules annotation) shall exist in the CML Bounded Context as well.   |
-| `modulesShouldBeModeledInCML`      | Modules that are implemented in the code (for example annotated with @Module jMolecules annotation) shall exist in the CML Bounded Context as well.             |
-| `entitiesShouldBeModeledInCML`     | Entities that are implemented in the code (for example annotated with @Entity jMolecules annotation) shall exist in the CML Bounded Context as well.            |
-| `valueObjectsShouldBeModeledInCML` | Value Objects that are implemented in the code (for example annotated with @ValueObject jMolecules annotation) shall exist in the CML Bounded Context as well.  |
-| `domainEventsShouldBeModeledInCML` | Domain events that are implemented in the code (for example annotated with @DomainEvent jMolecules annotation) shall exist int the CML Bounded Context as well. |
-| `servicesShouldBeModeledInCML`     | Services that are implemented in the code (for example annotated with @Service jMolecules annotation) shall exist in the CML Bounded Context as well.           |
-| `repositoriesShouldBeModeledInCML` | Repositories that are implemented in the code (for example annotated with @Repository annotation) shall exist in the CML Bounded Context as well.               |
-|                                    |                                                                                                                                                                 |
-|                                    |                                                                                                                                                                 |
+|                                                 | Description                                                                                                                                                                                                                                                                     |
+|-------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `aggregatesShouldBeModeledInCML`                | Aggregates that are implemented in the code (for example annotated with @AggregateRoot jMolecules annotation) shall exist in the CML Bounded Context as well.                                                                                                                   |
+| `modulesShouldBeModeledInCML`                   | Modules that are implemented in the code (for example annotated with @Module jMolecules annotation) shall exist in the CML Bounded Context as well.                                                                                                                             |
+| `entitiesShouldBeModeledInCML`                  | Entities that are implemented in the code (for example annotated with @Entity jMolecules annotation) shall exist in the CML Bounded Context as well.                                                                                                                            |
+| `valueObjectsShouldBeModeledInCML`              | Value Objects that are implemented in the code (for example annotated with @ValueObject jMolecules annotation) shall exist in the CML Bounded Context as well.                                                                                                                  |
+| `domainEventsShouldBeModeledInCML`              | Domain events that are implemented in the code (for example annotated with @DomainEvent jMolecules annotation) shall exist int the CML Bounded Context as well.                                                                                                                 |
+| `servicesShouldBeModeledInCML`                  | Services that are implemented in the code (for example annotated with @Service jMolecules annotation) shall exist in the CML Bounded Context as well.                                                                                                                           |
+| `repositoriesShouldBeModeledInCML`              | Repositories that are implemented in the code (for example annotated with @Repository annotation) shall exist in the CML Bounded Context as well.                                                                                                                               |
+| `aggregatesShouldAdhereToCmlAggregateStructure` | This rule ensures that an Aggregate in the code (basically a Java package with a marker on the aggregate root entity; for example annotated with @AggregateRoot jMolecules annotation) consists of the same entities, value objects, and domain events as it is modeled in CML. |
+|                                                 |                                                                                                                                                                                                                                                                                 |
 
 ## Ideas for rules to implement
 The following list states some rules that could be implemented. We are still working on this list and input it very welcome!
 
 | Rule                                    | Description                                                                                                         |
 |-----------------------------------------|---------------------------------------------------------------------------------------------------------------------|
-| `aggregatesShouldAdhereToCmlModel`      | Structural check that ensures that Aggregates consists of same objects (Entities, ValueObjects, etc.); code vs. CML |
 | `entityShouldAdhereToCmlStructure`      | Structural check of entity: same attributes, same methods, same references                                          |
 | `valueObjectShouldAdhereToCmlStructure` | Structure check of value object: same attributes, same methods, same references                                     |
 | `{}ShouldAdhereToCmlStructure`          | dito. for other tactic DDD objects (domain events, service, etc.)                                                   |
