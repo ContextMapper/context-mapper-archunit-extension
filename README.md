@@ -23,6 +23,9 @@ testImplementation 'org.contextmapper:context-mapper-archunit-extension:1.0.0'
 </dependency>
 ```
 
+### JavaDoc
+Besides the code example below, you can find the complete JavaDoc of the libraries API [here](https://www.javadoc.io/doc/org.contextmapper/context-mapper-archunit-extension/latest/index.html).
+
 ### Use all our test cases
 The simplest way to apply all our test predefined test cases is to extend our `AbstractTacticArchUnitTest`. An example:
 
@@ -89,6 +92,8 @@ public class ExampleArchitectureTest {
 
 The three example tests above ensure that Aggregates, Entities, and Value Objects that exist in the Java code, also exist in the CML model. In case a developer adds an Aggregate, Entity, or Value Object to the code that is not part of the CML model, the test will fail.
 
+The example above uses our predefined rules based on the jMolecules annotations. You can find all available rules [here](https://www.javadoc.io/doc/org.contextmapper/context-mapper-archunit-extension/latest/org/contextmapper/archunit/ContextMapperJMoleculesArchRules.html). The next section shows how you can write your own rules, in case you don't want to use jMolecules.
+
 ### Use custom annotations
 By using only our ArchCondition's it is also possible to implement the tests with other annotations than JMolecules:
 
@@ -125,9 +130,11 @@ public class ExampleArchitectureTest {
 }
 ```
 
+As the example illustrates, in this case you are able to select your classes with your own code (using your own annotations); but you can still use our conditions, that check specific things in the CML model. You can find all conditions that are currently available [here](https://www.javadoc.io/doc/org.contextmapper/context-mapper-archunit-extension/latest/org/contextmapper/archunit/ContextMapperArchConditions.html).
+
 ## Available Rules and Conditions
 _Hint:_ The available rules are implemented with the jMolecules DDD annotations. However, you can implement the same rules with your
-own set of annotations or interfaces by using the corresponding ArchUnit conditions.
+own set of annotations or interfaces by using the corresponding ArchUnit conditions (as documented above).
 
 | Rule / Condition                                    | Description                                                                                                                                                                                                                                                                     |
 |-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -142,6 +149,8 @@ own set of annotations or interfaces by using the corresponding ArchUnit conditi
 | `entitiesShouldAdhereToCmlEntityStructure`          | This rule ensures that the fields of an entity in the code (for example annotated with @Entity jMolecules annotation) are also modeled in the corresponding CML entity.                                                                                                         |
 | `valueObjectsShouldAdhereToCmlValueObjectStructure` | This rule ensures that the fields of a value object in the code (for example annotated with @ValueObject jMolecules annotation) are also modeled in the corresponding CML value object.                                                                                         |
 | `domainEventsShouldAdhereToCmlDomainEventStructure` | This rule ensures that the fields of a domain event in the code (for example annotated with @DomainEvent jMolecules annotation) are also modeled in the corresponding CML domain event.                                                                                         |
+
+The rules and conditions are documented in [our JavaDoc](https://www.javadoc.io/doc/org.contextmapper/context-mapper-archunit-extension/latest/index.html) as well.
 
 **Missing some rules/conditions?** Contributions are always welcome! Create PRs or GitHub issues with your ideas/requirements.
 
