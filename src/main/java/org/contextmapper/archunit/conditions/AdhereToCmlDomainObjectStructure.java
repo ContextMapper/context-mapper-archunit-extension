@@ -17,6 +17,8 @@ package org.contextmapper.archunit.conditions;
 
 import com.tngtech.archunit.core.domain.JavaClass;
 import com.tngtech.archunit.core.domain.JavaField;
+import com.tngtech.archunit.core.domain.JavaMember;
+import com.tngtech.archunit.core.domain.JavaModifier;
 import com.tngtech.archunit.lang.ArchCondition;
 import com.tngtech.archunit.lang.ConditionEvents;
 import com.tngtech.archunit.lang.SimpleConditionEvent;
@@ -27,6 +29,7 @@ import org.contextmapper.tactic.dsl.tacticdsl.Reference;
 import org.eclipse.xtext.EcoreUtil2;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public abstract class AdhereToCmlDomainObjectStructure extends ArchCondition<JavaClass> {
 
@@ -44,7 +47,9 @@ public abstract class AdhereToCmlDomainObjectStructure extends ArchCondition<Jav
             return;
 
         DomainObject cmlObject = optionalObject.get();
-        for (JavaField field : javaClass.getFields()) {
+        for (JavaField field : javaClass.getFields().stream()
+                .filter(f -> !f.getModifiers().contains(JavaModifier.STATIC))
+                .collect(Collectors.toSet())) {
             Optional<Attribute> cmlField = cmlObject.getAttributes().stream()
                     .filter(f -> f.getName().equals(field.getName()))
                     .findAny();
