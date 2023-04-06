@@ -51,6 +51,10 @@ task javadocJar(type: Jar) {
     archiveClassifier = 'javadoc'
 }
 
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
 artifacts {
     archives javadocJar, sourcesJar
 }

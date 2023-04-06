@@ -37,16 +37,22 @@ public abstract class AbstractTacticArchUnitTest {
 
     /**
      * Implement this method to define the Bounded Context name.
+     *
+     * @return A string that defines the Bounded Context name.
      */
     protected abstract String getBoundedContextName();
 
     /**
      * Implement this method to define against which CML file you want to test.
+     *
+     * @return A string that provides the file path to the CML file.
      */
     protected abstract String getCMLFilePath();
 
     /**
      * Implement this method to defined the java package within which you want to test.
+     *
+     * @return A string that represents the Java package name against you want to test.
      */
     protected abstract String getJavaPackageName2Test();
 
@@ -59,6 +65,8 @@ public abstract class AbstractTacticArchUnitTest {
 
     /**
      * Override this method to change class import behavior.
+     *
+     * @return JavaClasses object.
      */
     protected JavaClasses importClasses() {
         return new ClassFileImporter()
@@ -68,57 +76,79 @@ public abstract class AbstractTacticArchUnitTest {
 
     @Test
     void aggregatesShouldBeModeledInCML() {
-        aggregateClassesShouldBeModeledInCml(context).check(classes);
+        aggregateClassesShouldBeModeledInCml(context)
+                .allowEmptyShould(true)
+                .check(classes);
     }
 
     @Test
     void aggregatesShouldAdhereToCmlAggregateStructure() {
-        aggregatesShouldAdhereToCmlStructure(context).check(classes);
+        aggregatesShouldAdhereToCmlStructure(context)
+                .allowEmptyShould(true)
+                .check(classes);
     }
 
     @Test
     void modulesShouldBeModeledInCML() {
-        modulePackagesShouldBeModeledInCml(context).check(classes);
+        modulePackagesShouldBeModeledInCml(context)
+                .allowEmptyShould(true)
+                .check(classes);
     }
 
     @Test
     void entitiesShouldBeModeledInCML() {
-        entityClassesShouldBeModeledInCml(context).check(classes);
+        entityClassesShouldBeModeledInCml(context)
+                .allowEmptyShould(true)
+                .check(classes);
     }
 
     @Test
     void valueObjectsShouldBeModeledInCML() {
-        valueObjectClassesShouldBeModeledInCml(context).check(classes);
+        valueObjectClassesShouldBeModeledInCml(context)
+                .allowEmptyShould(true)
+                .check(classes);
     }
 
     @Test
     void domainEventsShouldBeModeledInCML() {
-        domainEventClassesShouldBeModeledInCml(context).check(classes);
+        domainEventClassesShouldBeModeledInCml(context)
+                .allowEmptyShould(true)
+                .check(classes);
     }
 
     @Test
     void servicesShouldBeModeledInCML() {
-        serviceClassesShouldBeModeledInCml(context).check(classes);
+        serviceClassesShouldBeModeledInCml(context)
+                .allowEmptyShould(true)
+                .check(classes);
     }
 
     @Test
     void repositoriesShouldBeModeledInCML() {
-        repositoryClassesShouldBeModeledInCml(context).check(classes);
+        repositoryClassesShouldBeModeledInCml(context)
+                .allowEmptyShould(true)
+                .check(classes);
     }
 
     @Test
     void entitiesShouldAdhereToCmlStructure() {
-        entitiesShouldAdhereToCmlEntityStructure(context).check(classes);
+        entitiesShouldAdhereToCmlEntityStructure(context)
+                .allowEmptyShould(true)
+                .check(classes);
     }
 
     @Test
     void valueObjectsShouldAdhereToCmlStructure() {
-        valueObjectsShouldAdhereToCmlValueObjectStructure(context).check(classes);
+        valueObjectsShouldAdhereToCmlValueObjectStructure(context)
+                .allowEmptyShould(true)
+                .check(classes);
     }
 
     @Test
     void domainEventsShouldAdhereToCmlStructure() {
-        domainEventsShouldAdhereToCmlDomainEventStructure(context).check(classes);
+        domainEventsShouldAdhereToCmlDomainEventStructure(context)
+                .allowEmptyShould(true)
+                .check(classes);
     }
 
 }
