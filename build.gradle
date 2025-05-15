@@ -3,7 +3,7 @@ plugins {
     id 'jacoco'
     id 'maven-publish'
     id 'signing'
-    id 'nebula.release' version '13.0.0'
+    id 'nebula.release' version '20.2.0'
 }
 
 group 'org.contextmapper'
@@ -24,6 +24,7 @@ dependencies {
 
     testImplementation "org.assertj:assertj-core:${assertJVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${jUnitVersion}"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 }
 
 sourceSets.test.java.srcDirs = ['src/test/java','src/test/cml']
@@ -34,8 +35,8 @@ test {
 
 jacocoTestReport {
     reports {
-        xml.enabled true
-        html.enabled true
+        xml.required = true
+        html.required = true
     }
 }
 
